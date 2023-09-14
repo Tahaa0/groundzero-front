@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import '../style/global.css';
+import { extractCoord } from '../utils';
 import { directus } from '../services/directus';
 import { createItem } from '@directus/sdk';
 
@@ -33,7 +34,7 @@ const AddMissingPerson = () => {
                 village_name: villageName,
                 location: {
                     type: 'Point',
-                    coordinates: location.split(',').map(Number).reverse()
+                    coordinates: extractCoord(location)
                 },
                 age: Number(age),
                 gender: sex,
@@ -69,7 +70,7 @@ const AddMissingPerson = () => {
                 <div className='form-tab'>
                     <div className='form-tab-title'>Localisation (obligatoire) :</div>
                     <div className='form-tab-content'>
-                        <input type='text' className='form-tab-input' placeholder='Lien Google Maps ' value={location} onChange={e => setLocation(e.target.value)} />
+                        <input type='text' className='form-tab-input' placeholder='Lien ou coordonnées Google Maps' value={location} onChange={e => setLocation(e.target.value)} />
                     </div>
                 </div>
                 <div className='form-tab'>

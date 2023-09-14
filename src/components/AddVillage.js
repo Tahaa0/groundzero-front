@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../style/global.css';
+import { extractCoord } from '../utils';
 // import api from '../services/api';
 import { directus } from '../services/directus';
 import { createItem } from '@directus/sdk';
@@ -49,7 +50,7 @@ const AddVillage = () => {
                 name: name,
                 geolocation: {
                     type: 'Point',
-                    coordinates: location.split(',').map(Number).reverse()
+                    coordinates: extractCoord(location)
                 },
                 needs: info,
                 phone: phone,
@@ -77,7 +78,7 @@ const AddVillage = () => {
                 <div className='form-tab'>
                     <div className='form-tab-title'>Localisation :</div>
                     <div className='form-tab-content'>
-                        <input type='text' className='form-tab-input' placeholder='Lien Google Maps ' value={location} onChange={e => setLocation(e.target.value)} />
+                        <input type='text' className='form-tab-input' placeholder='Lien ou coordonnées Google Maps ' value={location} onChange={e => setLocation(e.target.value)} />
                     </div>
                 </div>
                 <div className='form-tab'>
