@@ -18,6 +18,9 @@ async function fetchVillages() {
           },
         },
       },
+      filter: {
+        status: { _eq: 'approved' },
+      },
       fields: ['*', { translations: ['*'] }],
       limit: 10,
     })
