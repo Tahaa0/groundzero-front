@@ -31,10 +31,7 @@ const AddMissingPerson = () => {
             const missing = await directus.request(createItem('missing_persons', {
                 name: name,
                 village_name: villageName,
-                location: {
-                    type: 'Point',
-                    coordinates: location.split(',').map(Number).reverse()
-                },
+                
                 /*location: {
                     type: 'Point',
                     coordinates: location.split(',').map(Number).reverse()
