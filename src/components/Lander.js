@@ -32,6 +32,11 @@ const Lander = () => {
                 </div>
                 <div className='villages'>
                     Nous traitons actuellement vos demandes, nous les afficherons ici bientôt.
+                    <br></br>
+                    <br></br>
+                    Team GroundZero
+                    <br></br>
+                    Contact : <a href="mailto:sami.mersel@gmail.com">sami.mersel@gmail.com</a>
                 </div>
                 
                 {/*activeTab === 'villages' && <Villages />}
