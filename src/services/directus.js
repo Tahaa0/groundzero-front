@@ -1,5 +1,5 @@
 import { createDirectus } from '@directus/sdk';
-import { rest } from '@directus/sdk/rest';
+import { rest,  } from '@directus/sdk/rest';
 
 export const directus = createDirectus('https://groundzerodirectus.azurewebsites.net/').with(rest());
 

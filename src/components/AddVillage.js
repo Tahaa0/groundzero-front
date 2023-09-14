@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import '../style/global.css';
-import api from '../services/api';
+// import api from '../services/api';
+import { directus } from '../services/directus';
+import { createItem } from '@directus/sdk';
 
 const AddVillage = () => {
 
@@ -20,18 +22,45 @@ const AddVillage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        api.post('/village', {
-            name: name,
-            geolocation: location,
-            needs: info,
-            phone: phone,
-            whatsapp: whatsapp
-        }).then(res => {
+        // api.post('/village', {
+        //     name: name,
+        //     geolocation: location,
+        //     needs: info,
+        //     phone: phone,
+        //     whatsapp: whatsapp
+        // }).then(res => {
+        //     window.notify('Village ajouté avec succès.');
+        //     cleanForm();
+        // }).catch(err => {
+        //     window.notifyRed('Erreur lors de l\'ajout du village.');
+        // })
+        try {
+            // const village = await directus.request('villages').create({
+            //     name: name,
+            //     geolocation: {
+            //         type: 'Point',
+            //         coordinates: location.split(',').map(Number)
+            //     },
+            //     needs: info,
+            //     phone: phone,
+            //     whatsapp: whatsapp
+            // });
+            const village = await directus.request(createItem('villages', {
+                name: name,
+                geolocation: {
+                    type: 'Point',
+                    coordinates: location.split(',').map(Number).reverse()
+                },
+                needs: info,
+                phone: phone,
+                whatsapp: whatsapp
+            }));
             window.notify('Village ajouté avec succès.');
             cleanForm();
-        }).catch(err => {
+        } catch (error) {
+            console.log(error);
             window.notifyRed('Erreur lors de l\'ajout du village.');
-        })
+        }
     }
 
     return(<>
