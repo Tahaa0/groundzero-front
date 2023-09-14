@@ -47,10 +47,11 @@ const AddVillage = () => {
             // });
             const village = await directus.request(createItem('villages', {
                 name: name,
-                geolocation: {
+                /*geolocation: {
                     type: 'Point',
                     coordinates: location.split(',').map(Number).reverse()
-                },
+                },*/
+                googlemaplink: location,
                 needs: info,
                 phone: phone,
                 whatsapp: whatsapp

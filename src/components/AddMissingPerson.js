@@ -35,6 +35,11 @@ const AddMissingPerson = () => {
                     type: 'Point',
                     coordinates: location.split(',').map(Number).reverse()
                 },
+                /*location: {
+                    type: 'Point',
+                    coordinates: location.split(',').map(Number).reverse()
+                },*/
+                googlemaplink: location,
                 age: Number(age),
                 gender: sex,
                 phone: phone,
