@@ -1,6 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import '../style/global.css';
 import api from '../services/api';
+import { directus } from '../services/directus';
+import { rest, readItems } from '@directus/sdk/rest';
+
+// Initialize the SDK.
+const languageCode = 'fr';
+
+async function fetchVillages() {
+  // Call the Directus API using the SDK using the locale of the frontend.
+  const pages = await directus.request(
+    readItems('villages', {
+      deep: {
+        translations: {
+          _filter: {
+            languages_code: { _eq: languageCode },
+          },
+        },
+      },
+      fields: ['*', { translations: ['*'] }],
+      limit: 10,
+    })
+  );
+
+  // return pages[0];
+  return pages;
+}
+
 
 const Village = ({ name, location, phone, whatsapp="", needs="", createdAt }) => {
     const formatDateToFrench = (dateStr) => {
@@ -45,18 +71,20 @@ const Villages = () => {
         const [villages, setVillages] = useState([]);
     
         useEffect(() => {
-            api.get('/village').then(res => {
-                setVillages(res.data);
-            }).catch(err => {
-                window.notifyRed('Erreur lors de la récupération des villages.');
-            })
-        }, [])
+            fetchVillages().then((villages) => {
+                setVillages(villages);
+            }).catch((error) => {
+                window
+                    .notifyRed('An error occurred while fetching the villages.')
+                console.error(error);
+            });
+        }, []);
     
         return(<>
                 
                 <div className="villages">
                     {villages.map(village => (
-                        <Village name={village.name} location={village.geolocation} phone={village.phone} whatsapp={village.whatsapp} needs={village.needs} createdAt={village.createdAt} />
+                        <Village name={village.name} location={village.geolocation.coordinates} phone={village.phone} whatsapp={village.whatsapp} needs={village.needs} createdAt={village.date_created} />
                     ))}
                 </div>
                 </>
