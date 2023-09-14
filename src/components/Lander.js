@@ -30,8 +30,12 @@ const Lander = () => {
                         Personnes disparues
                     </div>
                 </div>
-                {activeTab === 'villages' && <Villages />}
-                {activeTab === 'missingPersons' && <MissingPersons />}
+                <div className='villages'>
+                    Nous traitons actuellement vos demandes, nous les afficherons ici bientôt.
+                </div>
+                
+                {/*activeTab === 'villages' && <Villages />}
+                {activeTab === 'missingPersons' && <MissingPersons />*/}
             </div>
         </>
     );
