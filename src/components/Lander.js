@@ -34,9 +34,9 @@ const Lander = () => {
                     Nous traitons actuellement vos demandes, nous les afficherons ici bientôt.
                     <br></br>
                     <br></br>
-                    Team GroundZero
+                    Equipe GroundZero
                     <br></br>
-                    Contact : <a href="mailto:sami.mersel@gmail.com">sami.mersel@gmail.com</a>
+                    Contact : sami.mersel@gmail.com
                 </div>
                 
                 {/*activeTab === 'villages' && <Villages />}
