@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../style/global.css';
-import api from '../services/api';
+import { directus } from '../services/directus';
+import { createItem } from '@directus/sdk';
 
 const AddMissingPerson = () => {
 
@@ -8,7 +9,7 @@ const AddMissingPerson = () => {
     const [villageName, setVillageName] = useState('');
     const [location, setLocation] = useState('');
     const [age, setAge] = useState('');
-    const [sex, setSex] = useState('');
+    const [sex, setSex] = useState('male');
     const [phone, setPhone] = useState('');
     const [whatsapp, setWhatsapp] = useState('');
     const [info, setInfo] = useState('');
@@ -26,21 +27,25 @@ const AddMissingPerson = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        api.post('/missingperson', {
-            name: name,
-            villageName: villageName,
-            location: location,
-            age: age,
-            sex: sex,
-            phone: phone,
-            whatsapp: whatsapp,
-            info: info
-        }).then(res => {
+        try {
+            const missing = await directus.request(createItem('missing_persons', {
+                name: name,
+                village_name: villageName,
+                location: {
+                    type: 'Point',
+                    coordinates: location.split(',').map(Number).reverse()
+                },
+                age: Number(age),
+                gender: sex,
+                phone: phone,
+                whatsapp: whatsapp,
+                info: info
+            }));
             window.notify('Personne disparue ajoutée avec succès.');
             cleanForm();
-        }).catch(err => {
+        } catch (error) {
             window.notifyRed('Erreur lors de l\'ajout de la personne disparue.');
-        })
+        }
     }
 
     return (
@@ -76,9 +81,10 @@ const AddMissingPerson = () => {
                 <div className='form-tab'>
                     <div className='form-tab-title'>Sexe :</div>
                     <div className='form-tab-content'>
-                        <select>
-                            <option value="M">Homme/Garçon</option>
-                            <option value="F">Femme/fille</option>
+                        <select value={sex} onChange={e => setSex(e.target.value)}>
+                            <option value="male">Homme/Garçon</option>
+                            <option value="female">Femme/fille</option>
+                            <option value="unknown">Non identifié(e)</option>
                         </select>
                     </div>
                 </div>
