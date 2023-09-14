@@ -64,10 +64,9 @@ const AddVillage = () => {
     }
 
     return(<>
-        
             <form className="add-village">
-                <div className='form-tab'>
-                    <a href='/'><div className='button'>Retour</div></a>
+                <div className='form-tab-header'>
+                    Déclarer un village en besoin
                 </div>
                 <div className='form-tab'>
                     <div className='form-tab-title'>Nom du village :</div>
@@ -100,8 +99,9 @@ const AddVillage = () => {
                         <input type='text' className='form-tab-input' placeholder='Numéro de téléphone' value={whatsapp} onChange={e => setWhatsapp(e.target.value)} />
                     </div>
                 </div>
-                <div className='form-tab'>
-                    <button type='submit' className='form-tab-submit' onClick={handleSubmit}>Soumettre</button>
+                <div className='form-tab-buttons'>
+                    <button type='submit' className='form-tab-button' onClick={handleSubmit}>Soumettre</button>
+                    <a href='/' className='form-tab-button'><div className='button'>Retour</div></a>
                 </div>
         </form>
         </>

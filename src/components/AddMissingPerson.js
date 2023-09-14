@@ -51,8 +51,8 @@ const AddMissingPerson = () => {
     return (
         <>
             <form className="add-missing-person">
-                <div className='form-tab'>
-                    <a href='/'><div className='button'>Retour</div></a>
+                <div className='form-tab-header'>
+                    Lancer un avis de recherche
                 </div>
                 <div className='form-tab'>
                     <div className='form-tab-title'>Nom de la personne (obligatoire) :</div>
@@ -67,7 +67,7 @@ const AddMissingPerson = () => {
                     </div>
                 </div>
                 <div className='form-tab'>
-                    <div className='form-tab-title'>Localisation :</div>
+                    <div className='form-tab-title'>Localisation (obligatoire) :</div>
                     <div className='form-tab-content'>
                         <input type='text' className='form-tab-input' placeholder='Lien Google Maps ' value={location} onChange={e => setLocation(e.target.value)} />
                     </div>
@@ -100,9 +100,9 @@ const AddMissingPerson = () => {
                         <input type='text' className='form-tab-input' placeholder='Whatsapp' value={whatsapp} onChange={e => setWhatsapp(e.target.value)} />
                     </div>
                 </div>
-
-                <div className='form-tab'>
-                    <button type='submit' className='form-tab-submit' onClick={handleSubmit}>Soumettre</button>
+                <div className='form-tab-buttons'>
+                    <button type='submit' className='form-tab-button' onClick={handleSubmit}>Soumettre</button>
+                    <a href='/' className='form-tab-button'><div className='button'>Retour</div></a>
                 </div>
             </form>
         </>
