@@ -96,9 +96,10 @@ const AddMissingPerson = () => {
                 <div className='form-tab'>
                     {/* <div className='form-tab-title'>Sexe :</div> */}
                     <div className='form-tab-content'>
-                        <select>
-                            <option value="M">Homme/Garçon</option>
-                            <option value="F">Femme/fille</option>
+                    <select value={sex} onChange={e => setSex(e.target.value)}>
+                            <option value="male">Homme/Garçon</option>
+                            <option value="female">Femme/fille</option>
+                            <option value="unknown">Non identifié(e)</option>
                         </select>
                     </div>
                 </div>

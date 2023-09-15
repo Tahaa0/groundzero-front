@@ -66,8 +66,8 @@ const MissingPersons = () => {
                     {missingPersons.map(person => (
                         <MissingPerson 
                             name={person.name} 
-                            villageName={person.villageName} 
-                            location={person.location} 
+                            villageName={person.village_name} 
+                            location={person.googlemaplink} 
                             age={person.age}
                             sex={person.sex}
                             phone={person.phone}

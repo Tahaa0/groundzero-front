@@ -24,7 +24,7 @@ const AddVillage = () => {
         e.preventDefault();
         api.post('/village', {
             name: name,
-            geolocation: location,
+            googlemaplink: location,
             needs: info,
             phone: phone,
             whatsapp: whatsapp
