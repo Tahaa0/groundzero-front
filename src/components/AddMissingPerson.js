@@ -30,7 +30,7 @@ const AddMissingPerson = () => {
         e.preventDefault();
         api.post('/missingperson', {
             name: name,
-            village_name: villageName,
+            villageName: villageName,
             
             /*location: {
                 type: 'Point',
