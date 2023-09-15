@@ -43,7 +43,6 @@ const MissingPerson = ({ name, villageName, location, age, sex, phone, whatsapp=
         }).format(date);
     };
 
-
     return(
         <div className="missing-person">
             <div className='person-name'>
@@ -79,35 +78,35 @@ const MissingPerson = ({ name, villageName, location, age, sex, phone, whatsapp=
 
 const MissingPersons = () => {
     
-    const [missingPersons, setMissingPersons] = useState([]);
-
-    useEffect(() => {
-        fetchMissing().then(missing => {
-            setMissingPersons(missing);
-        }).catch(err => {
-            window.notifyRed('Erreur lors de la récupération des personnes disparues.');
-        })
-    }, [])
-
-    return (
-        <>
-            <div className="missing-persons">
-                {missingPersons.map(person => (
-                    <MissingPerson 
-                        name={person.name} 
-                        villageName={person.villageName} 
-                        location={person.location.coordinates} 
-                        age={person.age}
-                        sex={person.sex}
-                        phone={person.phone}
-                        whatsapp={person.whatsapp}
-                        info={person.info}
-                        createdAt={person.date_created} 
-                    />
-                ))}
-            </div>
-        </>
-    )
+        const [missingPersons, setMissingPersons] = useState([]);
+    
+        useEffect(() => {
+            fetchMissing().then(missing => {
+                setMissingPersons(missing);
+            }).catch(err => {
+                window.notifyRed('Erreur lors de la récupération des personnes disparues.');
+            })
+        }, [])
+    
+        return (
+            <>
+                <div className="missing-persons">
+                    {missingPersons.map(person => (
+                        <MissingPerson 
+                            name={person.name} 
+                            villageName={person.villageName} 
+                            location={person.location.coordinates} 
+                            age={person.age}
+                            sex={person.sex}
+                            phone={person.phone}
+                            whatsapp={person.whatsapp}
+                            info={person.info}
+                            createdAt={person.date_created} 
+                        />
+                    ))}
+                </div>
+            </>
+        )
 }
 
 export { MissingPerson, MissingPersons };
