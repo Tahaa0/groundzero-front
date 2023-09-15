@@ -95,9 +95,9 @@ const MissingPersons = () => {
                         <MissingPerson 
                             name={person.name} 
                             villageName={person.villageName} 
-                            location={person.location.coordinates} 
+                            location={person.googlemaplink} 
                             age={person.age}
-                            sex={person.sex}
+                            sex={person.gender}
                             phone={person.phone}
                             whatsapp={person.whatsapp}
                             info={person.info}
