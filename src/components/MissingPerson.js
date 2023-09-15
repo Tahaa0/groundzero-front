@@ -1,6 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import '../style/global.css';
 import api from '../services/api';
+import { directus } from '../services/directus';
+import { readItems } from '@directus/sdk/rest';
+
+// Initialize the SDK.
+const languageCode = 'fr';
+
+async function fetchMissing() {
+    // Call the Directus API using the SDK using the locale of the frontend.
+    const pages = await directus.request(
+      readItems('missing_persons', {
+        deep: {
+          translations: {
+            _filter: {
+              languages_code: { _eq: languageCode },
+            },
+          },
+        },
+        filter: {
+          status: { _eq: 'published' },
+        },
+        fields: ['*', { translations: ['*'] }],
+        limit: 10,
+      })
+    );
+  
+    // return pages[0];
+    return pages;
+  }
 
 const MissingPerson = ({ name, villageName, location, age, sex, phone, whatsapp="", info="", createdAt }) => {
     const formatDateToFrench = (dateStr) => {
@@ -14,6 +40,7 @@ const MissingPerson = ({ name, villageName, location, age, sex, phone, whatsapp=
             hour12: false 
         }).format(date);
     };
+
 
     return(
         <div className="missing-person">
@@ -50,35 +77,35 @@ const MissingPerson = ({ name, villageName, location, age, sex, phone, whatsapp=
 
 const MissingPersons = () => {
     
-        const [missingPersons, setMissingPersons] = useState([]);
-    
-        useEffect(() => {
-            api.get('/missingperson').then(res => {
-                setMissingPersons(res.data);
-            }).catch(err => {
-                window.notifyRed('Erreur lors de la récupération des personnes disparues.');
-            })
-        }, [])
-    
-        return (
-            <>
-                <div className="missing-persons ">
-                    {missingPersons.map(person => (
-                        <MissingPerson 
-                            name={person.name} 
-                            villageName={person.village_name} 
-                            location={person.googlemaplink} 
-                            age={person.age}
-                            sex={person.sex}
-                            phone={person.phone}
-                            whatsapp={person.whatsapp}
-                            info={person.info}
-                            createdAt={person.createdAt} 
-                        />
-                    ))}
-                </div>
-            </>
-        )
+    const [missingPersons, setMissingPersons] = useState([]);
+
+    useEffect(() => {
+        fetchMissing().then(missing => {
+            setMissingPersons(missing);
+        }).catch(err => {
+            window.notifyRed('Erreur lors de la récupération des personnes disparues.');
+        })
+    }, [])
+
+    return (
+        <>
+            <div className="missing-persons">
+                {missingPersons.map(person => (
+                    <MissingPerson 
+                        name={person.name} 
+                        villageName={person.villageName} 
+                        location={person.location.coordinates} 
+                        age={person.age}
+                        sex={person.sex}
+                        phone={person.phone}
+                        whatsapp={person.whatsapp}
+                        info={person.info}
+                        createdAt={person.date_created} 
+                    />
+                ))}
+            </div>
+        </>
+    )
 }
 
 export { MissingPerson, MissingPersons };
