@@ -85,7 +85,7 @@ const Villages = () => {
             
             <div className="villages">
                 {villages.map(village => (
-                    <Village name={village.name} location={village.geolocation.coordinates} phone={village.phone} whatsapp={village.whatsapp} needs={village.needs} createdAt={village.date_created} />
+                    <Village name={village.name} location={village.googlemaplink} phone={village.phone} whatsapp={village.whatsapp} needs={village.needs} createdAt={village.date_created} />
                 ))}
             </div>
             </>
