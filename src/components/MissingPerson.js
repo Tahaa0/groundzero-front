@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import '../style/global.css';
 import api from '../services/api';
 import { directus } from '../services/directus';
 import { readItems } from '@directus/sdk/rest';
@@ -41,7 +43,6 @@ const MissingPerson = ({ name, villageName, location, age, sex, phone, whatsapp=
         }).format(date);
     };
 
-
     return(
         <div className="missing-person">
             <div className='person-name'>
@@ -51,7 +52,7 @@ const MissingPerson = ({ name, villageName, location, age, sex, phone, whatsapp=
                 Village : <span>{villageName}</span>
             </div>
             <div className='person-location'>
-                Localisation : <a className='btn btn-success' href={location} target='_blank'>Voir</a>
+                Localisation : <span>{location}</span>
             </div>
             <div className='person-age'>
                 Age : <span>{age}</span>
@@ -60,10 +61,10 @@ const MissingPerson = ({ name, villageName, location, age, sex, phone, whatsapp=
                 Sexe : <span>{sex}</span>
             </div>
             <div className='person-phone'>
-                Téléphone : <a href={`tel:${phone}`}>{phone}</a>
+                Téléphone : <span>{phone}</span>
             </div>
             <div className='person-whatsapp'>
-                Whatsapp : <a href={`https://wa.me/${whatsapp}?text=Salam`}>{whatsapp}</a>
+                Whatsapp : <span>{whatsapp}</span>
             </div>
             <div className='person-info'>
                 Infos : <span>{info}</span>
@@ -77,35 +78,35 @@ const MissingPerson = ({ name, villageName, location, age, sex, phone, whatsapp=
 
 const MissingPersons = () => {
     
-    const [missingPersons, setMissingPersons] = useState([]);
-
-    useEffect(() => {
-        fetchMissing().then(missing => {
-            setMissingPersons(missing);
-        }).catch(err => {
-            window.notifyRed('Erreur lors de la récupération des personnes disparues.');
-        })
-    }, [])
-
-    return (
-        <>
-            <div className="missing-persons">
-                {missingPersons.map(person => (
-                    <MissingPerson 
-                        name={person.name} 
-                        villageName={person.villageName} 
-                        location={person.location.coordinates} 
-                        age={person.age}
-                        sex={person.sex}
-                        phone={person.phone}
-                        whatsapp={person.whatsapp}
-                        info={person.info}
-                        createdAt={person.date_created} 
-                    />
-                ))}
-            </div>
-        </>
-    )
+        const [missingPersons, setMissingPersons] = useState([]);
+    
+        useEffect(() => {
+            fetchMissing().then(missing => {
+                setMissingPersons(missing);
+            }).catch(err => {
+                window.notifyRed('Erreur lors de la récupération des personnes disparues.');
+            })
+        }, [])
+    
+        return (
+            <>
+                <div className="missing-persons">
+                    {missingPersons.map(person => (
+                        <MissingPerson 
+                            name={person.name} 
+                            villageName={person.villageName} 
+                            location={person.location.coordinates} 
+                            age={person.age}
+                            sex={person.sex}
+                            phone={person.phone}
+                            whatsapp={person.whatsapp}
+                            info={person.info}
+                            createdAt={person.date_created} 
+                        />
+                    ))}
+                </div>
+            </>
+        )
 }
 
 export { MissingPerson, MissingPersons };
