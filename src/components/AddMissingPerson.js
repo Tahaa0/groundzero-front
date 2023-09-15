@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import '../style/global.css';
-import api from '../services/api';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { directus } from '../services/directus';
+import { createItem } from '@directus/sdk';
+
 const AddMissingPerson = () => {
 
     const [name, setName] = useState('');
     const [villageName, setVillageName] = useState('');
     const [location, setLocation] = useState('');
     const [age, setAge] = useState('');
-    const [sex, setSex] = useState('');
+    const [sex, setSex] = useState('male');
     const [phone, setPhone] = useState('');
     const [whatsapp, setWhatsapp] = useState('');
     const [info, setInfo] = useState('');
@@ -28,26 +30,22 @@ const AddMissingPerson = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        api.post('/missingperson', {
-            name: name,
-            villageName: villageName,
-            
-            /*location: {
-                type: 'Point',
-                coordinates: location.split(',').map(Number).reverse()
-            },*/
-            googlemaplink: location,
-            age: Number(age),
-            gender: sex,
-            phone: phone,
-            whatsapp: whatsapp,
-            info: info
-        }).then(res => {
+        try {
+            const missing = await directus.request(createItem('missing_persons', {
+                name: name,
+                villageName: villageName,
+                googlemaplink: location,
+                age: Number(age),
+                gender: sex,
+                phone: phone,
+                whatsapp: whatsapp,
+                info: info
+            }));
             window.notify('Personne disparue ajoutée avec succès.');
             cleanForm();
-        }).catch(err => {
+        } catch (error) {
             window.notifyRed('Erreur lors de l\'ajout de la personne disparue.');
-        })
+        }
     }
 
     return (

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import '../style/global.css';
-import api from '../services/api';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { directus } from '../services/directus';
+import { createItem } from '@directus/sdk';
+
 const AddVillage = () => {
 
     const [name, setName] = useState('');
@@ -22,18 +24,19 @@ const AddVillage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        api.post('/village', {
-            name: name,
-            googlemaplink: location,
-            needs: info,
-            phone: phone,
-            whatsapp: whatsapp
-        }).then(res => {
+        try {
+            const village = await directus.request(createItem('villages', {
+                name: name,
+                googlemaplink: location,
+                needs: info,
+                phone: phone,
+                whatsapp: whatsapp
+            }));
             window.notify('Village ajouté avec succès.');
             cleanForm();
-        }).catch(err => {
+        } catch (error) {
             window.notifyRed('Erreur lors de l\'ajout du village.');
-        })
+        }
     }
 
     return(<>
