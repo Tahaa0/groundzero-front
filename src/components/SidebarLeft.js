@@ -5,7 +5,10 @@ const SidebarLeft = () => {
     return(
             <div className="sidebarleft">
                 <div className='logo'>
-                    GroundZero.ma
+                    <a href="/">
+                      GroundZero.ma  
+                    </a>
+                    
                 </div>
             </div>
     )

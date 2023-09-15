@@ -6,6 +6,9 @@ import AssociationPopUp from './Association';
 import AddVillage from './AddVillage';
 import { Villages } from './Village';
 import { MissingPersons } from './MissingPerson';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const Lander = () => {
     const [activeTab, setActiveTab] = useState('villages');  // Default to 'villages' tab
@@ -13,9 +16,22 @@ const Lander = () => {
     return (
         <>
             <SidebarLeft />
-            <div className='lander'>
-                <a href='/add-missing'><div className='button big mt'>Lancer un avis de recherche</div></a>
-                <a href='/add-village'><div className='button big'>Déclarer un village à secourir</div></a>
+            <Container>
+            <div className='mt-40'>
+                
+                    <Row>
+                        <Col md={6} xs={6}>
+                        <a href='/add-missing'><div className='button big mt'>Lancer un avis de recherche</div></a>
+
+                        </Col>
+
+                        <Col md={6} xs={6}>
+                        <a href='/add-village'><div className='button big mt'>Déclarer un village à secourir</div></a>
+                            </Col>
+                    </Row>
+            
+                    <Row>
+                    <Col md={12} xs={12}>
                 <div className='tabs'>    
                     <div 
                         className={`tab ${activeTab === 'villages' ? 'active' : ''}`}
@@ -30,18 +46,12 @@ const Lander = () => {
                         Personnes disparues
                     </div>
                 </div>
-                <div className='villages'>
-                    Nous traitons actuellement vos demandes, nous les afficherons ici bientôt.
-                    <br></br>
-                    <br></br>
-                    Equipe GroundZero
-                    <br></br>
-                    Contact : sami.mersel@gmail.com
-                </div>
-                
-                {/*activeTab === 'villages' && <Villages />}
-                {activeTab === 'missingPersons' && <MissingPersons />*/}
+                {activeTab === 'villages' && <Villages />}
+                {activeTab === 'missingPersons' && <MissingPersons />}
+                </Col>
+                </Row>
             </div>
+            </Container>
         </>
     );
 }

@@ -80,7 +80,7 @@ h1{
 }
 
 .add-village input, .add-missing-person input, .add-missing-person select{
-    width: 300px;
+    width: 100%;
     padding: 10px;
     box-sizing: border-box;
     margin-bottom: 20px;
@@ -91,12 +91,16 @@ h1{
     border-radius: 5px;
 }
 .add-village .form-tab-title, .add-missing-person .form-tab-title{
-    font-size: 18px;
+    font-size: 15px;
+    text-transform: uppercase;
     font-weight: 600;
     margin-bottom: 10px;
 }
+.person-phone a,.person-whatsapp a{
+    color:black !important;
+}
 .add-village textarea, .add-missing-person textarea{
-    width: 300px;
+    width: 100%;
     padding: 10px;
     box-sizing: border-box;
     margin-bottom: 20px;
@@ -110,15 +114,22 @@ h1{
 .add-village button, .button, .add-missing-person button{
     padding: 10px 20px;
     background-color: #C1272D;
+    width:100%;
     color: #FFF;
     border:0;
     border-radius: 5px;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
+    text-transform:uppercase;
 }
 .add-village button:hover, .add-missing-person button:hover, .button:hover{
     background-color: #A11D22;
+    width: 100%;
+}
+.add-village button:hover, .add-missing-person button:hover, .button:hover{
+    background-color: #A11D22;
+    width: 100%;
 }
 
 
@@ -163,13 +174,12 @@ h2{
     margin-left: 10px;
 }
 .button.big{
-    font-size: 22px;
-    font-weight: 600;
-    padding: 20px 40px;
-    width: 400px;
+    font-size: 13px;
+    text-transform: uppercase;
+    font-weight: 500;
+    padding: 11px 5px;
     text-align: center;
     margin-bottom: 10px;
-
 }
 .button.mt{
     margin-top: 40px;
@@ -177,18 +187,6 @@ h2{
 .form-tab .button{
     width: fit-content;
     margin-bottom: 10px;
-}
-.form-tab-button{
-    display:inline-block;
-    margin-right:5px;
-}
-.form-tab-header{
-    text-align: center;
-    color: #E04A3A;
-    font-size: 23px;
-    font-weight: 600;
-    margin-bottom: 30px;
-    margin-top: 50px;
 }
 a{
     color: #fff;
@@ -216,4 +214,36 @@ a{
 .tabs .tab.active{
     border-bottom: 2px solid #C1272D;
     color: #C1272D;
+}
+.mt-20{
+    margin-top: 20px;
+}
+.mt-40{
+    margin-top: 40px;
+}
+.retour{
+    line-height: 31px;
+    margin-bottom:20px;
+    text-transform:uppercase;
+}
+@media screen and (max-width: 992px) {
+   .tabs .tab {
+    padding: 7px 18px;
+    color: #FFF;
+    border: 0;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-right: 10px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0);
+} 
+}
+.form-tab-header {
+    color: #e04a3a;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 30px;
+    margin-top: 50px;
+    text-align: center;
+    text-transform:uppercase;
 }
