@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import '../style/global.css';
 import api from '../services/api';
 import { directus } from '../services/directus';
 import { readItems } from '@directus/sdk/rest';
