@@ -30,10 +30,15 @@ const AddMissingPerson = () => {
         e.preventDefault();
         api.post('/missingperson', {
             name: name,
-            villageName: villageName,
-            location: location,
-            age: age,
-            sex: sex,
+            village_name: villageName,
+            
+            /*location: {
+                type: 'Point',
+                coordinates: location.split(',').map(Number).reverse()
+            },*/
+            googlemaplink: location,
+            age: Number(age),
+            gender: sex,
             phone: phone,
             whatsapp: whatsapp,
             info: info
