@@ -24,18 +24,23 @@ const AddVillage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const village = await directus.request(createItem('villages', {
-                name: name,
-                googlemaplink: location,
-                needs: info,
-                phone: phone,
-                whatsapp: whatsapp
-            }));
-            window.notify('Village ajouté avec succès.');
-            cleanForm();
-        } catch (error) {
-            window.notifyRed('Erreur lors de l\'ajout du village.');
+        if (phone + whatsapp === "") {
+            window.notifyRed('Besoin de spécifier numéro tel ou whatsapp')
+        }
+        else {
+            try {
+                const village = await directus.request(createItem('villages', {
+                    name: name,
+                    googlemaplink: location,
+                    needs: info,
+                    phone: phone,
+                    whatsapp: whatsapp
+                }));
+                window.notify('Village ajouté avec succès.');
+                cleanForm();
+            } catch (error) {
+                window.notifyRed('Erreur lors de l\'ajout du village.');
+            }
         }
     }
 

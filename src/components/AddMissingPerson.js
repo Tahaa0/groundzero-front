@@ -30,21 +30,26 @@ const AddMissingPerson = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            const missing = await directus.request(createItem('missing_persons', {
-                name: name,
-                villageName: villageName,
-                googlemaplink: location,
-                age: Number(age),
-                gender: sex,
-                phone: phone,
-                whatsapp: whatsapp,
-                info: info
-            }));
-            window.notify('Personne disparue ajoutée avec succès.');
-            cleanForm();
-        } catch (error) {
-            window.notifyRed('Erreur lors de l\'ajout de la personne disparue.');
+        if (phone + whatsapp === "") {
+            window.notifyRed('Besoin de spécifier numéro tel ou whatsapp')
+        }
+        else {
+            try {
+                const missing = await directus.request(createItem('missing_persons', {
+                    name: name,
+                    villageName: villageName,
+                    googlemaplink: location,
+                    age: Number(age),
+                    gender: sex,
+                    phone: phone,
+                    whatsapp: whatsapp,
+                    info: info
+                }));
+                window.notify('Personne disparue ajoutée avec succès.');
+                cleanForm();
+            } catch (error) {
+                window.notifyRed('Erreur lors de l\'ajout de la personne disparue.');
+            }
         }
     }
 
