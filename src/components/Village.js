@@ -48,7 +48,7 @@ const Village = ({ name, location, phone, whatsapp="", needs="", createdAt }) =>
                 Village : <span>{name}</span>
             </div>
             <div className='person-location'>
-                Localisation : <a className='btn btn-success' href={location} target='_blank'>Voir</a>
+                Localisation : {(location === "")? (<small color='red'>Non spécifiée</small>) : (<a className='btn btn-success' href={location} target='_blank'>Voir</a>)}
             </div>
             <div className='village-needs'>
                 Besoins et infos : <span>{needs}</span>

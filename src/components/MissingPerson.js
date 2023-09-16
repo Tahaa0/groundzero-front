@@ -52,7 +52,7 @@ const MissingPerson = ({ name, villageName, location, age, sex, phone, whatsapp=
                 Village : <span>{villageName}</span>
             </div>
             <div className='person-location'>
-                Localisation : <a className='btn btn-success' href={location} target='_blank'>Voir</a>
+                Localisation : {(location === "")? (<small color='red'>Non spécifiée</small>) : (<a className='btn btn-success' href={location} target='_blank'>Voir</a>)}
             </div>
             <div className='person-age'>
                 Age : <span>{age}</span>
