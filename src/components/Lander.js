@@ -1,26 +1,12 @@
 import React, { useState } from 'react';
 import '../style/global.css';
-// import MapComponent from './Map';
-// import SidebarLeft from './SidebarLeft';
-// import Row from 'react-bootstrap/Row';
-// import Col from 'react-bootstrap/Col';
 import Btn from './Btn';
 import languages from '../utils/languages';
 import { Link } from 'react-router-dom';
 import logo from '../assets/images/logo.png';
-import searchIc from '../assets/images/search-icon.svg';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faSearch,
-  // faCoffee,
-  // faTea,
-  // faBeer,
-} from '@fortawesome/free-solid-svg-icons';
-import { faCoffee, faBeer } from '@fortawesome/free-solid-svg-icons';
-import { Dropdown, DropdownButton } from 'react-bootstrap';
+import Dropdown from './Dropdown';
 
 const Lander = () => {
-  const [activeTab, setActiveTab] = useState('villages'); // Default to 'villages' tab
   const [isRtl, setIsRtl] = useState(false);
   const [activeFilter, setActiveFilter] = useState('villageBtn');
 
@@ -64,7 +50,12 @@ const Lander = () => {
                   </select>
                 </div>
                 <div className="faq d-flex aling-items-center gap-3">
-                  <Btn classes="share-btn d-none d-sm-block">Share</Btn>
+                  <Btn
+                    classes="share-btn d-none d-sm-block"
+                    onClick={handleShare}
+                  >
+                    Share
+                  </Btn>
                   <Btn classes="faq-btn">?</Btn>
                 </div>
               </div>
@@ -115,32 +106,24 @@ const Lander = () => {
       </div>
 
       <div className="container">
-        <div className="container">
-          <div className="container">
-            <div className="mt-4 d-flex justify-content-end flex-column flex-md-row">
-              <div className="col-6">
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className="filter-input"
-                    placeholder="recherche"
-                  />
-                </div>
-              </div>
-              <div className="col-6">
-                <div className="d-flex justify-content-end align-items-center">
-                  <select className="filter-">
-                    <option value="consectetur">
-                      <span className="my-span">name</span>
-                    </option>
-                    <option value="beatae">beatae</option>
-                    <option value="ipsum">ipsum</option>
-                  </select>
-                  <select>
-                    <option value="quisquam">quisquam</option>
-                    <option value="adipisicing">adipisicing</option>
-                    <option value="libero">libero</option>
-                  </select>
+        <div className="mt-4 d-flex justify-content-end flex-column flex-md-row align-items-center sm-col-gap">
+          <div className="col-6">
+            <div className="form-group">
+              <input
+                type="text"
+                className="filter-input"
+                placeholder="recherche"
+              />
+            </div>
+          </div>
+          <div className="col-6">
+            <div className="d-flex justify-content-end align-items-center">
+              <div className="container">
+                <div className="col">
+                  <div className="d-flex justify-content-end gap-3">
+                    <Dropdown />
+                    <Dropdown />
+                  </div>
                 </div>
               </div>
             </div>

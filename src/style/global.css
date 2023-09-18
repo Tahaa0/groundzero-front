@@ -10,11 +10,10 @@ html,
 body {
   margin: 0;
   padding: 0;
-  /* height: 5000px; */
 }
 
 body {
-  color: #fff;
+  color: #fff !important;
   background-repeat: no-repeat;
   background-position: 20px 20px;
   background-size: 80px;
@@ -205,4 +204,38 @@ body {
 
 .my-span {
   background-image: url('../assets/images/search-icon.svg');
+}
+
+.dropdown {
+  display: inline-block;
+  position: relative;
+}
+
+.dropdown .form-select {
+  border-radius: 25px;
+}
+
+.dropdown,
+.dropdown-menu {
+  width: 13rem !important;
+}
+
+.dropdown-item {
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background-color: var(--theme-red) !important;
+  color: #fff !important;
+}
+
+@media (max-width: 575px) {
+  .sm-col-gap {
+    gap: 1rem;
+  }
+
+  .dropdown,
+  .dropdown-menu {
+    width: 10rem !important;
+  }
 }
