@@ -53,17 +53,20 @@ const AddVillage = () => {
             <div className="d-flex justify-content-center text-center mb-4">
               <article>
                 <p className="d-inline">
-                  Comment ça marche? Aller sur google map, poser un pin 📍,
-                  cliquer sur partager et copié le lien. Coller le lien dans
-                  "lien google map". Les posts sans numéro de contacts (numéro
-                  de télephone ou what's app) ne seront pas
+                  Comment ça marche?
+                  <br />
+                  Aller sur google map, poser un pin 📍, cliquer sur partager et
+                  copié le lien. Coller le lien dans "lien google map". Les
+                  posts sans numéro de contacts (numéro de télephone ou what's
+                  app) ne seront pas
                 </p>
                 <br />
                 <p className="d-inline font-cairo">
-                  كيف تعمل؟ اذهب إلى خريطة جوجل، ضع دبوس📍، ثم اضغط على مشاركة
-                  وانسخ الرابط. الصق الرابط في "رابط خريطة جوجل". لن يتم
-                  الموافقة على المنشورات التي لا تحتوي على رقم اتصال (رقم الهاتف
-                  او الواتساب)
+                  كيف تعمل؟
+                  <br />
+                  اذهب إلى خريطة جوجل، ضع دبوس📍، ثم اضغط على مشاركة وانسخ
+                  الرابط. الصق الرابط في "رابط خريطة جوجل". لن يتم الموافقة على
+                  المنشورات التي لا تحتوي على رقم اتصال (رقم الهاتف او الواتساب)
                 </p>
               </article>
             </div>
