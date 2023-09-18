@@ -5,6 +5,7 @@ import languages from '../utils/languages';
 import { Link } from 'react-router-dom';
 import logo from '../assets/images/logo.png';
 import Dropdown from './Dropdown';
+import Card from './Card';
 
 const Lander = () => {
   const [isRtl, setIsRtl] = useState(false);
@@ -106,7 +107,7 @@ const Lander = () => {
       </div>
 
       <div className="container">
-        <div className="mt-4 d-flex justify-content-end flex-column flex-md-row align-items-center sm-col-gap">
+        <div className="m-2 d-flex justify-content-end flex-column flex-md-row align-items-center sm-col-gap">
           <div className="col-6">
             <div className="form-group">
               <input
@@ -127,6 +128,42 @@ const Lander = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="container">
+        <div className="row gx-1">
+          <div className="col-md-4 col-sm-6 col-12">
+            <Card />
+          </div>
+          <div className="col-md-4 col-sm-6 col-12">
+            <Card />
+          </div>
+          <div className="col-md-4 col-sm-6 col-12">
+            <Card />
+          </div>
+        </div>
+        <div className="row gx-1">
+          <div className="col-md-4 col-sm-6 col-12">
+            <Card />
+          </div>
+          <div className="col-md-4 col-sm-6 col-12">
+            <Card />
+          </div>
+          <div className="col-md-4 col-sm-6 col-12">
+            <Card />
+          </div>
+        </div>
+        <div className="row gx-1">
+          <div className="col-md-4 col-sm-6 col-12">
+            <Card />
+          </div>
+          <div className="col-md-4 col-sm-6 col-12">
+            <Card />
+          </div>
+          <div className="col-md-4 col-sm-6 col-12">
+            <Card />
           </div>
         </div>
       </div>

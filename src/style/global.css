@@ -13,11 +13,11 @@ body {
 }
 
 body {
-  color: #fff !important;
   background-repeat: no-repeat;
   background-position: 20px 20px;
   background-size: 80px;
   font-family: 'Inter', sans-serif;
+  background-color: #eee;
 }
 
 .rtl-dir {
@@ -48,6 +48,7 @@ body {
   /* height: 42rem; */
   height: 90vh;
   min-width: 100%;
+  color: #fff !important;
 }
 
 .logo-img {
@@ -124,12 +125,6 @@ body {
 
 .my-row {
   width: 100%;
-}
-
-.hi {
-  background-color: crimson;
-  padding: 1rem;
-  height: 1rem;
 }
 
 .main-filter-bg {
@@ -238,4 +233,60 @@ body {
   .dropdown-menu {
     width: 10rem !important;
   }
+}
+
+.card {
+  padding: 0.5rem;
+  border-radius: 15px;
+}
+
+.card-tag-filter {
+  background-color: #eef6ff;
+  color: #3c81f6;
+  border-radius: 25px;
+  border: 1px solid #fff;
+  width: fit-content;
+  padding: 0.2rem 0.65rem;
+  cursor: pointer;
+}
+
+.card-tag-filter:hover {
+  background-color: #fff;
+  border: 1px solid #3c81f6;
+}
+
+.card-label {
+  font-weight: 700;
+}
+
+.card-location,
+.card-timing-info {
+  color: #999;
+}
+
+.card-location-btn {
+  width: fit-content;
+  font-weight: 500;
+  border-radius: 25px;
+  padding: 0.25rem 0.75rem;
+}
+
+.card-contact-btn {
+  width: fit-content;
+  font-weight: 500;
+  border-radius: 25px;
+  padding: 0.25rem 0.75rem;
+  color: #10ca35;
+  background-color: #e0ffe7;
+}
+
+.card-timing {
+  font-size: 85%;
+}
+
+.card-more-btn {
+  color: #9ca3af;
+  background-color: #f9fafb;
+  border: 0.1px solid #9ca3af;
+  border-radius: 25px;
 }
