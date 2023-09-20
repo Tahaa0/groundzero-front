@@ -14,20 +14,19 @@ const Lander = () => {
     const [activeTab, setActiveTab] = useState('villages');  // Default to 'villages' tab
 
     return (
-        <>
+        <>      
             <SidebarLeft />
             <Container>
             <div className='mt-40'>
                 
                     <Row>
                         <Col md={6} xs={6}>
-                        <a href='/add-missing'><div className='button big mt'>Lancer un avis de recherche</div></a>
-
+                            <a href='/add-missing'><div className='button big mt'>Lancer un avis de recherche</div></a>
                         </Col>
 
                         <Col md={6} xs={6}>
-                        <a href='/add-village'><div className='button big mt'>Déclarer un village à secourir</div></a>
-                            </Col>
+                            <a href='/add-village'><div className='button big mt'>Déclarer un village à secourir</div></a>
+                        </Col>
                     </Row>
             
                     <Row>
@@ -45,9 +44,16 @@ const Lander = () => {
                     >
                         Personnes disparues
                     </div>
+                    <div 
+                        className={`tab ${activeTab === 'map' ? 'active' : ''}`}
+                        onClick={() => setActiveTab('map')}
+                    >
+                        Carte
+                    </div>
                 </div>
                 {activeTab === 'villages' && <Villages />}
                 {activeTab === 'missingPersons' && <MissingPersons />}
+                {activeTab === 'map' && <MapComponent/>}
                 </Col>
                 </Row>
             </div>
