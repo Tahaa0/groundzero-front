@@ -51,12 +51,6 @@ const Lander = () => {
                   </select>
                 </div>
                 <div className="faq d-flex aling-items-center gap-3">
-                  <Btn
-                    classes="share-btn d-none d-sm-block"
-                    onClick={handleShare}
-                  >
-                    Share
-                  </Btn>
                   <Btn classes="faq-btn">?</Btn>
                 </div>
               </div>
@@ -84,7 +78,7 @@ const Lander = () => {
         </header>
       </div>
       <div className="text-center d-flex flex-column justify-content-center align-items-center">
-        <div className="d-flex align-items-center gap-2 mt-3 justify-content-between main-filter-bg">
+        <div className="d-flex align-items-center gap-2 my-3 justify-content-between main-filter-bg">
           <Btn
             type="button"
             onClick={() => handleFilterChange('villageBtn')}
@@ -103,32 +97,6 @@ const Lander = () => {
           >
             Personnes Disparus
           </Btn>
-        </div>
-      </div>
-
-      <div className="container">
-        <div className="m-2 d-flex justify-content-end flex-column flex-md-row align-items-center sm-col-gap">
-          <div className="col-6">
-            <div className="form-group">
-              <input
-                type="text"
-                className="filter-input"
-                placeholder="recherche"
-              />
-            </div>
-          </div>
-          <div className="col-6">
-            <div className="d-flex justify-content-end align-items-center">
-              <div className="container">
-                <div className="col">
-                  <div className="d-flex justify-content-end gap-3">
-                    <Dropdown />
-                    <Dropdown />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 

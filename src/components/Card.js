@@ -5,7 +5,7 @@ import Btn from './Btn';
 
 const Card = () => {
   return (
-    <article className="m-2 card">
+    <article className="m-2 p-3 card">
       <div className="d-flex align-items-center justify-content-between">
         <p className="card-label">Douar Nom</p>
         <p className="card-tag-filter">Status</p>
@@ -45,18 +45,6 @@ const Card = () => {
             <AiOutlineWhatsApp />
             <span>WhatsApp</span>
           </div>
-        </Btn>
-      </div>
-
-      <div className="d-flex align-items-center justify-content-center gap-2">
-        <Btn classes="w-100 p-1 m-1 card-more-btn">
-          <span>Plus D'informasions</span>
-        </Btn>
-      </div>
-
-      <div className="d-flex align-items-center justify-content-center gap-2">
-        <Btn classes="w-100 p-1 m-1 card-more-btn">
-          <span>Commenter</span>
         </Btn>
       </div>
     </article>
