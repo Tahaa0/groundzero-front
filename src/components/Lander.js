@@ -4,17 +4,12 @@ import Btn from './Btn';
 import languages from '../utils/languages';
 import { Link } from 'react-router-dom';
 import logo from '../assets/images/logo.png';
-import Dropdown from './Dropdown';
 import Card from './Card';
 import SocialLink from './SocialLink';
 
 const Lander = () => {
   const [isRtl, setIsRtl] = useState(false);
   const [activeFilter, setActiveFilter] = useState('villageBtn');
-
-  const handleShare = () => {
-    console.log('TODO handleShare');
-  };
 
   const handleFilterChange = (activeBtn) => {
     if (activeBtn) {
