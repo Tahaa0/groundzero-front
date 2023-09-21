@@ -1,15 +1,44 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../style/global.css';
 import Btn from './Btn';
 import languages from '../utils/languages';
 import { Link } from 'react-router-dom';
 import logo from '../assets/images/logo.png';
 import Card from './Card';
-import SocialLink from './SocialLink';
+import { directus } from '../services/directus';
+import { readItems } from '@directus/sdk/rest';
+import Footer from './Footer';
+
+async function fetchVillages(currentLang) {
+  // Call the Directus API using the SDK using the locale of the frontend.
+  const pages = await directus.request(
+    readItems('villages', {
+      deep: {
+        translations: {
+          _filter: {
+            languages_code: { _eq: currentLang },
+          },
+        },
+      },
+      filter: {
+        status: { _eq: 'approved' },
+      },
+      fields: ['*', { translations: ['*'] }],
+      limit: 10,
+    })
+  );
+
+  return pages;
+}
 
 const Lander = () => {
   const [isRtl, setIsRtl] = useState(false);
   const [activeFilter, setActiveFilter] = useState('villageBtn');
+  const [villages, setVillages] = useState([]);
+  const [currentLang, setCurrentLang] = useState({
+    id: 'fr',
+    label: 'Français',
+  });
 
   const handleFilterChange = (activeBtn) => {
     if (activeBtn) {
@@ -18,12 +47,27 @@ const Lander = () => {
   };
 
   const handleLangChange = (selectedLang) => {
+    const lang = languages.find((l) => l.label === selectedLang);
+    if (lang) {
+      setCurrentLang(lang);
+    }
     if (selectedLang === 'العربية') {
       setIsRtl(true);
     } else {
       setIsRtl(false);
     }
   };
+
+  useEffect(() => {
+    fetchVillages(currentLang?.id ?? 'fr') //default language is fr.
+      .then((villages) => {
+        setVillages(villages);
+      })
+      .catch((error) => {
+        window.notifyRed('An error occurred while fetching the villages.');
+        console.error(error);
+      });
+  }, [currentLang]);
 
   return (
     <div className={`${isRtl ? 'rtl-dir' : ''}`}>
@@ -55,7 +99,7 @@ const Lander = () => {
 
           <div className="text-center d-flex flex-column justify-content-center align-items-center">
             <h1 className="hero-center-heading">
-              Supporting Local efforts on the grouns
+              Supporting Local efforts on the ground
             </h1>
             <p className="hero-center-text">
               Signaler personnes disparitu, informer des villages dans le
@@ -98,78 +142,21 @@ const Lander = () => {
 
       <div className="container">
         <div className="row gx-1">
-          <div className="col-md-4 col-sm-6 col-12">
-            <Card />
-          </div>
-          <div className="col-md-4 col-sm-6 col-12">
-            <Card />
-          </div>
-          <div className="col-md-4 col-sm-6 col-12">
-            <Card />
-          </div>
-        </div>
-        <div className="row gx-1">
-          <div className="col-md-4 col-sm-6 col-12">
-            <Card />
-          </div>
-          <div className="col-md-4 col-sm-6 col-12">
-            <Card />
-          </div>
-          <div className="col-md-4 col-sm-6 col-12">
-            <Card />
-          </div>
-        </div>
-        <div className="row gx-1">
-          <div className="col-md-4 col-sm-6 col-12">
-            <Card />
-          </div>
-          <div className="col-md-4 col-sm-6 col-12">
-            <Card />
-          </div>
-          <div className="col-md-4 col-sm-6 col-12">
-            <Card />
-          </div>
+          {villages.map((village) => (
+            <div className="col-4 col-md-4 col-12 h-100" key={village.id}>
+              <Card
+                name={village.name}
+                location={village.googlemaplink}
+                phone={village.phone}
+                whatsapp={village.whatsapp}
+                needs={village.needs}
+                createdAt={village.date_created}
+              />
+            </div>
+          ))}
         </div>
       </div>
-
-      <footer>
-        <div className="footer">
-          <div className="container text-center d-flex justify-content-center align-items-center h-50">
-            <div className="w-50">
-              <div>
-                Merci aux contributeurs Ahmed, Adib, Mouad....
-                <br />
-                Contactl:{' '}
-                <a
-                  className="text-white contact-email"
-                  href="mailto:sami.mersel@gmail.com"
-                >
-                  sami.mersel@gmail.com
-                </a>
-                <br />
-                <br />
-                <p>Proudly Open Source</p>
-                <div className="d-flex justify-content-center align-items-center">
-                  <ul className="social-list d-flex gap-4">
-                    <SocialLink
-                      iconClass="fa-brands fa-instagram"
-                      url="https://instagram.com/groundzeromaroc?igshid=NGVhN2U2NjQ0Yg=="
-                    />
-                    <SocialLink
-                      iconClass="fa-brands fa-github"
-                      url="https://github.com/Tahaa0/groundzero-front"
-                    />
-                    <SocialLink
-                      iconClass="fa-brands fa-twitter"
-                      url="https://twitter.com/groundzeroma?t=d_LX8KXOKWwFZ2JPdqRvbg&s=09"
-                    />
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

@@ -91,7 +91,7 @@ body {
 
 @media screen and (min-width: 575px) {
   .hero-center-heading {
-    width: 25rem;
+    width: 25.5rem;
   }
 }
 
@@ -308,7 +308,7 @@ body {
 }
 
 .social-link {
-  color: white;
+  color: #fff;
 }
 
 .footer {
@@ -321,4 +321,21 @@ body {
 
 .social-icon-font {
   font-size: 125%;
+}
+
+.card-contact {
+  color: #10ca35;
+}
+
+.card-location-link {
+  color: #fff;
+}
+
+.card-location-link,
+.card-contact {
+  text-decoration: none;
+}
+
+.card-needs {
+  height: 7rem;
 }
