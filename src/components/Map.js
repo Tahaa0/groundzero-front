@@ -2,14 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
 import { directus } from '../services/directus';
 import { readItems } from '@directus/sdk/rest';
+import PanelLeft from './PanelLeft';
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
 const languageCode = 'fr';
+const worldview = 'MA'
 
 const MapComponent = () => {
     const mapContainerRef = useRef(null);
     const [locations, setLocations] = useState([]);
+    const [panel, setPanel] = useState(0);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -25,7 +28,8 @@ const MapComponent = () => {
                 },
                 filter: {
                   // status: { _eq: 'approved' },
-                  googlemaplink: { _eq: 'link' },
+                  geolocation: { _nnull: true }
+                  // googlemaplink: { _eq: 'link' },
                 },
                 fields: ['id', 'geolocation'],
               })
@@ -64,23 +68,22 @@ const MapComponent = () => {
         });
         // When the map is loaded...
         map.on('load', () => {
-            // Add dots in specific locations
-            const poi = locations.map(poi => { return poi.geolocation.coordinates })
             // Add a data source for the locations
             map.addSource('villages', {
                 'type': 'geojson',
                 'data': {
                     'type': 'FeatureCollection',
-                    'features': poi.map(loc => ({
+                    'features': locations.map( loc => ({
                         'type': 'Feature',
+                        'id': loc.id,
                         'geometry': {
                             'type': 'Point',
-                            'coordinates': loc
+                            'coordinates': loc.geolocation.coordinates,
                         }
                     }))
                 },
                 'cluster': true,
-                'clusterMaxZoom': 14, // Max zoom to cluster points on
+                'clusterMaxZoom': 10, // Max zoom to cluster points on
                 'clusterRadius': 150 // Radius of each cluster when clustering points (defaults to 50)
             });
   
@@ -141,6 +144,11 @@ const MapComponent = () => {
                 'text-size': 12
               }
             });
+
+            const adminLayers = ['admin-0-boundary', 'admin-1-boundary', 'admin-0-boundary-disputed', 'admin-1-boundary-bg', 'admin-0-boundary-bg']
+            adminLayers.forEach((adminLayer) => {
+              map.setFilter(adminLayer, ["match", ["get", "worldview"], ["all", worldview], true, false])
+            });
         });
 
         // inspect a cluster on click
@@ -160,29 +168,20 @@ const MapComponent = () => {
           );
         });
 
-        map.on('click', 'points', (e) => {
-          const coordinates = e.features[0].geometry.coordinates;
+        map.on("click", "points", e => {
+          const features = map.queryRenderedFeatures(e.point, {layers: ["points"],})
+          setPanel(features[0].id)
           
-          // Ensure that if the map is zoomed out such that
-          // multiple copies of the feature are visible, the
-          // popup appears over the copy being pointed to.
-          // while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-          //   coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-          // }
-
-          window.notify(String(coordinates))
-          
-          // new mapboxgl.Popup()
-          //   .setLngLat(coordinates)
-          //   .setText(`long: ${coordinates[0]}lat: ${coordinates[1]}`)
-          //   .addTo(map)
-
           map.flyTo({
-            center: coordinates,
-            zoom: 8,
+            center: features[0].geometry.coordinates,
+            zoom: 11,
             essential: true, // This ensures the animation is smooth and not interrupted
           });
         })
+
+        // map.on("click", (e) => {
+        //   setPanel(0)
+        // })
 
         map.on('mouseenter', 'points', () => {
           map.getCanvas().style.cursor = 'pointer';
@@ -204,7 +203,8 @@ const MapComponent = () => {
       }
     }, [loading]);
 
-    return (<div>
+    return (<>
+              {panel > 0 ? (<PanelLeft IdVillage={panel} />) : (<p>No corresponding item</p>)}
               {loading ? (
                 <p>Loading...</p>
                   ) : (
@@ -212,8 +212,7 @@ const MapComponent = () => {
                   <div className='mapdiv' ref={mapContainerRef} />
                 </div>
               )}
-            </div>)
-  
+            </>)
 }
 
 export default MapComponent;

@@ -263,3 +263,13 @@ a {
 .font-cairo {
   font-family: Cairo, sans-serif !important;
 }
+
+.panel {
+  position: absolute;
+  width: 33.3333%;
+  height: 80%;
+  top: 85;
+  left: 10;
+  overflow: hidden;
+  border-right: 1px solid rgba(0, 0, 0, 0.25);
+}
