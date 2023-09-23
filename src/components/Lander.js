@@ -91,7 +91,6 @@ const Lander = () => {
           <div className="row">
             <div className="col-6">
               <div className="logo">
-                <h1>{currentLang.id}</h1>
                 <Link to="/">
                   <img className="logo-img" src={logo} alt="logo" />
                 </Link>
