@@ -1,15 +1,18 @@
+import { useTranslation } from 'react-i18next';
 import SocialLink from './SocialLink';
 
 const Footer = () => {
+  const { t } = useTranslation();
+
   return (
     <footer>
       <div className="footer">
         <div className="container text-center d-flex justify-content-center align-items-center h-50">
           <div className="w-50">
             <div>
-              Merci aux contributeurs Ahmed, Adib, Mouad....
+              {`${t('Thanks to the contributors Ahmed, Adib, Mouad')}....`}
               <br />
-              Contactl:{' '}
+              {t('Contact')}
               <a
                 className="text-white contact-email"
                 href="mailto:sami.mersel@gmail.com"

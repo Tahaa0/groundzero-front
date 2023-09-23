@@ -8,6 +8,7 @@ import Card from './Card';
 import { directus } from '../services/directus';
 import { readItems } from '@directus/sdk/rest';
 import Footer from './Footer';
+import { useTranslation } from 'react-i18next';
 
 async function fetchVillages(currentLang) {
   // Call the Directus API using the SDK using the locale of the frontend.
@@ -39,6 +40,7 @@ const Lander = () => {
     id: 'fr',
     label: 'Français',
   });
+  const { t, i18n } = useTranslation();
 
   const handleFilterChange = (activeBtn) => {
     if (activeBtn) {
@@ -50,6 +52,8 @@ const Lander = () => {
     const lang = languages.find((l) => l.label === selectedLang);
     if (lang) {
       setCurrentLang(lang);
+      localStorage.setItem('currentLang', lang.id);
+      i18n.changeLanguage(lang.id);
     }
     if (selectedLang === 'العربية') {
       setIsRtl(true);
@@ -59,15 +63,26 @@ const Lander = () => {
   };
 
   useEffect(() => {
-    fetchVillages(currentLang?.id ?? 'fr') //default language is fr.
+    fetchVillages(currentLang?.id ?? 'fr') //fallback language is fr.
       .then((villages) => {
         setVillages(villages);
       })
       .catch((error) => {
-        window.notifyRed('An error occurred while fetching the villages.');
+        window.notifyRed(t('An error occurred while fetching the villages.'));
         console.error(error);
       });
   }, [currentLang]);
+
+  useEffect(() => {
+    const setDefaultCurrentLang = () => {
+      localStorage.setItem(
+        'currentLang',
+        localStorage.getItem('currentLang') ?? currentLang.id
+      );
+    };
+
+    setDefaultCurrentLang();
+  }, []);
 
   return (
     <div className={`${isRtl ? 'rtl-dir' : ''}`}>
@@ -76,6 +91,7 @@ const Lander = () => {
           <div className="row">
             <div className="col-6">
               <div className="logo">
+                <h1>{currentLang.id}</h1>
                 <Link to="/">
                   <img className="logo-img" src={logo} alt="logo" />
                 </Link>
@@ -97,21 +113,21 @@ const Lander = () => {
             </div>
           </div>
 
-          <div className="text-center d-flex flex-column justify-content-center align-items-center">
+          <div className="text-center d-flex flex-column justify-content-center align-items-center mt-5">
             <h1 className="hero-center-heading">
-              Supporting Local efforts on the ground
+              {t('Supporting Local efforts on the ground')}
             </h1>
             <p className="hero-center-text">
-              Signaler personnes disparitu, informer des villages dans le
-              besoins. Les posts sont manuellement confirmé par les modérateurs
-              avant d'apparaitre sur le site. Merci de partager en masse.
+              {t(
+                'Report missing persons, inform villages in need. Posts are manually confirmed by moderators before appearing on the site. Please share widely.'
+              )}
             </p>
-            <div className="d-flex align-items-center gap-4 mt-3 flex-column flex-md-row">
+            <div className="d-flex align-items-center gap-4 mt-5 flex-column flex-md-row">
               <Btn classes="hero-center-btn" type="button">
-                Lancer un avis de recherche
+                {t('Launch a search alert')}
               </Btn>
               <Btn classes="hero-center-btn" type="button">
-                Déclarer un village à secourir
+                {t('Declare a village in need of rescue')}
               </Btn>
             </div>
           </div>
@@ -126,7 +142,7 @@ const Lander = () => {
               activeFilter === 'villageBtn' ? 'active-filter-btn' : ''
             }`}
           >
-            Village a secourir
+            {t('Village in need of rescue')}
           </Btn>
           <Btn
             type="button"
@@ -135,7 +151,7 @@ const Lander = () => {
               activeFilter === 'missingPersonBtn' ? 'active-filter-btn' : ''
             }`}
           >
-            Personnes Disparus
+            {t('Missing Persons')}
           </Btn>
         </div>
       </div>

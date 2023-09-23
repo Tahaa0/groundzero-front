@@ -2,6 +2,7 @@ import { IoLocationOutline } from 'react-icons/io5';
 import { AiOutlineWhatsApp } from 'react-icons/ai';
 import { BsTelephone } from 'react-icons/bs';
 import Btn from './Btn';
+import { useTranslation } from 'react-i18next';
 
 const Card = ({
   name,
@@ -11,6 +12,8 @@ const Card = ({
   needs = '',
   createdAt,
 }) => {
+  const { t } = useTranslation();
+
   const formatDateToFrench = (dateStr) => {
     if (!dateStr) {
       return '';
@@ -32,7 +35,7 @@ const Card = ({
         <p className="card-label">
           {name?.length <= 25 ? name : `${name.slice(0, 25)}...`}
         </p>
-        <p className="card-tag-filter">Status</p>
+        <p className="card-tag-filter">{t('Status')}</p>
       </div>
       <p className="card-location d-flex align-items-center justify-content-start gap-1">
         <IoLocationOutline />
@@ -42,16 +45,16 @@ const Card = ({
         {needs?.length <= 80 ? needs : `${needs.slice(0, 80)}...`}
       </p>
       <div className="card-timing d-flex align-items-center justify-content-between px-2">
-        <p>1 Person</p>
+        <p>1 {t('Person')}</p>
         <p className="card-timing-info">
-          Published {formatDateToFrench(createdAt)}
+          {t('Published')} {formatDateToFrench(createdAt)}
         </p>
       </div>
       <hr />
       {location ? (
         <div className="d-flex align-items-center justify-content-center">
           <Btn classes="card-location-btn">
-            <div className="d-flex align-items-center justify-content-around gap-3">
+            <div className="d-flex align-items-center justify-content-center gap-2">
               <IoLocationOutline />
               <a
                 className="card-location-link"
@@ -59,13 +62,13 @@ const Card = ({
                 target="_blank"
                 rel="noreferrer"
               >
-                <span>Voir Localisation</span>
+                <span>{t('View Location')}</span>
               </a>
             </div>
           </Btn>
         </div>
       ) : (
-        <p className="text-center">Pas de localisation</p>
+        <p className="text-center">{t('No Location')}</p>
       )}
       <hr />
       <div className="d-flex align-items-center justify-content-center gap-2">
@@ -79,7 +82,7 @@ const Card = ({
                 target="_blank"
                 rel="noreferrer"
               >
-                <span>Telephone</span>
+                <span>{t('Telephone')}</span>
               </a>
             </div>
           </Btn>
@@ -94,7 +97,7 @@ const Card = ({
                 target="_blank"
                 rel="noreferrer"
               >
-                <span>WhatsApp</span>
+                <span>{t('WhatsApp')}</span>
               </a>
             </div>
           </Btn>

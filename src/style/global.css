@@ -82,6 +82,7 @@ body {
 .hero-center-btn {
   border-radius: 25px;
   padding: 0.5rem 1rem;
+  width: 20rem;
 }
 
 .hero-center-heading {
@@ -91,7 +92,7 @@ body {
 
 @media screen and (min-width: 575px) {
   .hero-center-heading {
-    width: 25.5rem;
+    width: 26.5rem;
   }
 }
 
@@ -131,13 +132,13 @@ body {
   background-color: var(--main-filter-bg);
   border-radius: 25px;
   padding: 0.75rem;
-  width: 25rem;
+  width: 30rem;
 }
 
 .main-filter-btn {
   border-radius: 25px;
   padding: 0.25rem 0.75rem;
-  width: 12rem;
+  width: 20rem;
   background-color: transparent !important;
   color: #222;
   font-weight: 400;
@@ -265,7 +266,7 @@ body {
 }
 
 .card-location-btn {
-  width: fit-content;
+  width: 12rem;
   font-weight: 500;
   border-radius: 25px;
   padding: 0.25rem 0.75rem;
