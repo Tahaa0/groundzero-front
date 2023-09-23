@@ -15,5 +15,6 @@
   "View Location": "Voir la localisation",
   "No Location": "Pas de localisation",
   "Telephone": "Téléphone",
-  "WhatsApp": "WhatsApp"
+  "WhatsApp": "WhatsApp",
+  "Error occurred during the retrieval of missing persons.": "Une erreur s'est produite lors de la récupération des personnes disparues."
 }

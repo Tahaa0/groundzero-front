@@ -15,5 +15,6 @@
   "View Location": "عرض الموقع",
   "No Location": "لا يوجد موقع",
   "Telephone": "هاتف",
-  "WhatsApp": "واتساب"
+  "WhatsApp": "واتساب",
+  "Error occurred during the retrieval of missing persons.": "حدث خطأ أثناء استرجاع الأشخاص المفقودين."
 }
