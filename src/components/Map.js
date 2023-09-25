@@ -11,12 +11,14 @@ const worldview = 'MA'
 
 const MapComponent = () => {
     const mapContainerRef = useRef(null);
-    const [locations, setLocations] = useState([]);
-    const [panel, setPanel] = useState(0);
+    const [villages, setVillages] = useState([]);
+    const [missing, setMissing] = useState([]);
+    const [panel, setPanel] = useState('');
+    const [panelID, setPanelID] = useState(0);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const getPointsOfInterest = async () => {
+        const getVillages = async () => {
           const locations = await directus.request(
               readItems('villages', {
                 deep: {
@@ -27,7 +29,7 @@ const MapComponent = () => {
                   },
                 },
                 filter: {
-                  // status: { _eq: 'approved' },
+                  status: { _eq: 'approved' },
                   geolocation: { _nnull: true }
                   // googlemaplink: { _eq: 'link' },
                 },
@@ -37,12 +39,54 @@ const MapComponent = () => {
           return locations
         }
 
-        getPointsOfInterest().then((locations) => {
-          setLocations(locations)
-          setLoading(false); 
+        const getMissing = async () => {
+          const locations = await directus.request(
+              readItems('missing_persons', {
+                deep: {
+                  translations: {
+                    _filter: {
+                      languages_code: { _eq: languageCode },
+                    },
+                  },
+                },
+                filter: {
+                  status: { _eq: 'published' },
+                  location: { _nnull: true }
+                  // googlemaplink: { _eq: 'link' },
+                },
+                fields: ['id', 'location', 'gender'],
+              })
+          )
+          return locations
+        }
+
+        getVillages().then((village_locations) => {
+          village_locations = village_locations.map((item) => {
+            return {
+              id: item.id,
+              geolocation: item.geolocation,
+              person: 'village'
+            };
+          });
+          setVillages(village_locations)
+          getMissing().then((missing_locations) => {
+            missing_locations = missing_locations.map((item) => {
+              return {
+                id: item.id,
+                geolocation: item.location,
+                person: item.gender
+              };
+            });
+            setMissing(missing_locations)
+            setLoading(false); 
+          }).catch((error) => {
+            window.notifyRed('An error occurred while fetching missing persons.')
+          }); 
         }).catch((error) => {
-          window.notifyRed('An error occurred while fetching the villages.')
+          window.notifyRed('An error occurred while fetching villages.')
         }); 
+
+        
     }, []);
 
     useEffect(() => {
@@ -69,13 +113,16 @@ const MapComponent = () => {
         // When the map is loaded...
         map.on('load', () => {
             // Add a data source for the locations
-            map.addSource('villages', {
+            map.addSource('points_of_interest', {
                 'type': 'geojson',
                 'data': {
                     'type': 'FeatureCollection',
-                    'features': locations.map( loc => ({
+                    'features': villages.concat(missing).map( loc => ({
                         'type': 'Feature',
                         'id': loc.id,
+                        'properties': {
+                          'person' : loc.person
+                        },
                         'geometry': {
                             'type': 'Point',
                             'coordinates': loc.geolocation.coordinates,
@@ -91,11 +138,21 @@ const MapComponent = () => {
             map.addLayer({
                 'id': 'points',
                 'type': 'circle',
-                'source': 'villages',
+                'source': 'points_of_interest',
                 'filter': ['!', ['has', 'point_count']],
                 'paint': {
                     'circle-radius': 5, // Circle size
-                    'circle-color': '#006233', // Green color
+                    'circle-color': [
+                      'match',
+                      ['string', ['get', 'person']],
+                      'male',
+                      '#0047AB',
+                      'female',
+                      '#FF69B4',
+                      'village',
+                      '#006233',
+                      /* other */ '#ccc'
+                    ],
                     'circle-stroke-width': 1,
                     'circle-stroke-color': '#fff'
                 }
@@ -104,7 +161,7 @@ const MapComponent = () => {
             map.addLayer({
               id: 'clusters',
               type: 'circle',
-              source: 'villages',
+              source: 'points_of_interest',
               filter: ['has', 'point_count'],
               paint: {
                 // Use step expressions (https://docs.mapbox.com/style-spec/reference/expressions/#step)
@@ -136,7 +193,7 @@ const MapComponent = () => {
             map.addLayer({
               id: 'cluster-count',
               type: 'symbol',
-              source: 'villages',
+              source: 'points_of_interest',
               filter: ['has', 'point_count'],
               layout: {
                 'text-field': ['get', 'point_count_abbreviated'],
@@ -157,7 +214,7 @@ const MapComponent = () => {
             layers: ['clusters']
           });
           const clusterId = features[0].properties.cluster_id;
-          map.getSource('villages').getClusterExpansionZoom(clusterId,
+          map.getSource('points_of_interest').getClusterExpansionZoom(clusterId,
             (err, zoom) => {
               if (err) return;
               map.easeTo({
@@ -170,7 +227,8 @@ const MapComponent = () => {
 
         map.on("click", "points", e => {
           const features = map.queryRenderedFeatures(e.point, {layers: ["points"],})
-          setPanel(features[0].id)
+          setPanelID(features[0].id)
+          setPanel(features[0].properties.person)
           
           map.flyTo({
             center: features[0].geometry.coordinates,
@@ -204,7 +262,7 @@ const MapComponent = () => {
     }, [loading]);
 
     return (<>
-              {panel > 0 ? (<PanelLeft IdVillage={panel} />) : (<p>No corresponding item</p>)}
+              {panelID > 0 ? (<PanelLeft Id={panelID} type={panel} />) : (<p>No corresponding item</p>)}
               {loading ? (
                 <p>Loading...</p>
                   ) : (
