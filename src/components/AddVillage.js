@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import '../style/global.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { directus } from '../services/directus';
 import { createItem } from '@directus/sdk';
+import { useGoogleMaps } from '../components/google-maps';
 
 const AddVillage = () => {
   const [name, setName] = useState('');
@@ -34,6 +35,10 @@ const AddVillage = () => {
             needs: info,
             phone: phone,
             whatsapp: whatsapp,
+            geolocation: {
+              type: 'Point',
+              coordinates: [Number(formLng), Number(formLat)]
+          },
           })
         );
         window.notify('Village ajouté avec succès.');
@@ -43,6 +48,28 @@ const AddVillage = () => {
       }
     }
   };
+
+  const [formLat, setFormLat] = useState('31.634595');
+  const [formLng, setFormLng] = useState('-8.0902546');
+
+
+  const {
+    googleMapComponent,
+    // currentRoute,
+    // currentPostalCode,
+    // currentDistrict,
+  } = useGoogleMaps({
+    lat: Number(formLat),
+    lng: Number(formLng),
+    onCoordsChange(latitude, langitude) {
+      setFormLat(latitude);
+      setFormLng(langitude);
+    },
+    defaults: {
+      zoom: 10,
+    },
+    showPropsCoords: false,
+  });
 
   return (
     <>
@@ -97,6 +124,7 @@ const AddVillage = () => {
                   />
                 </div>
               </div>
+              {googleMapComponent}
             </Col>
             <Col md={12}>
               <div className="form-tab">
