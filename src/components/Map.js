@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import mapboxgl from 'mapbox-gl';
+// eslint-disable-next-line import/no-webpack-loader-syntax
+import mapboxgl from '!mapbox-gl';
 import { directus } from '../services/directus';
 import { readItems } from '@directus/sdk/rest';
 import PanelLeft from './PanelLeft';
