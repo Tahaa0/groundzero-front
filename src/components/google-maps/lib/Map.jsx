@@ -12,16 +12,6 @@ export const Map = ({
   const ref = useRef(null);
   const [map, setMap] = useState();
 
-  // Keep the same reference to the options object, compare by value
-  const optionsRef = useRef(options);
-  const optionsChanged = useMemo(
-    () => JSON.stringify(optionsRef.current) !== JSON.stringify(options),
-    [options]
-  );
-  if (optionsChanged) {
-    optionsRef.current = options;
-  }
-
   useEffect(() => {
     // Will be triggered when the ref changes
     if (ref.current && !map) {
@@ -35,14 +25,6 @@ export const Map = ({
     }
   }, [ref, map, options.zoom, options.center]);
   // END: Maps - React Map Component Add Map Hooks
-
-  // START: Maps - React Map Component Options Hooks
-  useEffect(() => {
-    if (map) {
-      map.setOptions(optionsRef.current);
-    }
-  }, [map, optionsChanged,optionsRef.current]);
-  // END: Maps - React Map Component Options Hooks
 
   // START: Maps - React Map Component Event Hooks
   useEffect(() => {
