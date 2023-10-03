@@ -263,3 +263,13 @@ a {
 .font-cairo {
   font-family: Cairo, sans-serif !important;
 }
+
+.flag{
+  width: 25px;
+  height: 25px;
+}
+
+.footer{
+  height:150x;
+  padding: 25px 100px 25px 100px;
+}
